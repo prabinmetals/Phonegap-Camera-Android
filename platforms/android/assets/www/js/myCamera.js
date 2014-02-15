@@ -1,6 +1,7 @@
 var pictureSource; // picture source
 var destinationType; // sets the format of returned value
-var i = 0;
+var i = 0; // Button counter
+
 // Wait for device API libraries to load
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -19,20 +20,21 @@ function onPhotoDataSuccess(imageData) {
 			.append(
 					"<img "
 							+ "style='width: 150px; margin:10px; border:2px solid black; border-radius:12px;'"
-							+ " id='smallImage" + i + "' src='' /> "
-							+ "<button "
-							+ "style='width: 150px; margin:2px 10px 2px 10px;'"
-							+ "id='deleteButton'" + i + "> Delete </button>");
+							+ " id='smallImage"
+							+ i
+							+ "' src='' /> "
+							+ "<input type='button' value='Delete'"
+							+ "style='width: 150px; margin:2px 10px 2px 10px; background-color:red; color: white; border-radius:12px;'"
+							+ "id='deleteButton" + i + "'> </input>");
 	var smallImage = document.getElementById('smallImage' + i);
 	// Unhide image elements
 	smallImage.style.display = 'block';
 	// Show the captured photo
 	// The in-line CSS rules are used to resize the image
-	// smallImage.src = "data:image/jpeg;base64," + imageData;
-
 	smallImage.src = "data:image/jpeg;base64," + imageData;
 	i = i + 1;
 }
+
 // Called when a photo is successfully retrieved
 function onPhotoURISuccess(imageURI) {
 	// Uncomment to view the image file URI
@@ -84,10 +86,20 @@ function onFail(message) {
 	alert('Failed because: ' + message);
 }
 
-$("#addItem")
-		.click(
-				function() {
-					$("#contents")
-							.append(
-									"<div class='newbox'> New <button> Click Her. </button></div>");
-				});
+// Dynamic buttons use this syntax. Hide and unhide image.
+$(document).on('click', '#myTable #atd input[type=button]', function() {
+	var butId = $(this).attr('id'); // Get the unique button id
+	var correspondingImageId = 'smallImage' + butId.slice(-1); // Get the image
+	// button id
+
+	// Toggle function to hide and unhide image
+	if ($(this).val() == "Delete") {
+		$('img[id*="' + correspondingImageId + '"]').hide("slow");
+		$(this).val("Undelete");
+		$(this).css("background-color", "green", "color", "white")
+	} else {
+		$('img[id*="' + correspondingImageId + '"]').show("fast");
+		$(this).val("Delete");
+		$(this).css("background-color", "red", "color", "white")
+	}
+});
