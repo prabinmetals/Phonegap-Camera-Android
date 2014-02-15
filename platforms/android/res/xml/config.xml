@@ -20,6 +20,11 @@ Hello Cordova
         name="loglevel"
         value="DEBUG" />
 
+    <feature name="org.apache.cordova.facebook.Connect" >
+        <param
+            name="android-package"
+            value="org.apache.cordova.facebook.ConnectPlugin" />
+    </feature>
     <feature name="App" >
         <param
             name="android-package"
@@ -29,11 +34,6 @@ Hello Cordova
         <param
             name="android-package"
             value="org.apache.cordova.camera.CameraLauncher" />
-    </feature>
-    <feature name="org.apache.cordova.facebook.Connect" >
-        <param
-            name="android-package"
-            value="org.apache.cordova.facebook.ConnectPlugin" />
     </feature>
 
     <name>

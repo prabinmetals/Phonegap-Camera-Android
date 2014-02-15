@@ -38,16 +38,30 @@ function onPhotoDataSuccess(imageData) {
 // Called when a photo is successfully retrieved
 function onPhotoURISuccess(imageURI) {
 	// Uncomment to view the image file URI
-	// console.log(imageURI);
+	console.log(imageURI);
+
+	// Get image handle script
 
 	// Get image handle
-	// script
-	var largeImage = document.getElementById('largeImage');
+	$("#atd")
+			.append(
+					"<img "
+							+ "style='width: 150px; margin:10px; border:2px solid black; border-radius:12px;'"
+							+ " id='smallImage"
+							+ i
+							+ "' src='' /> "
+							+ "<input type='button' value='Delete'"
+							+ "style='width: 150px; margin:2px 10px 2px 10px; background-color:red; color: white; border-radius:12px;'"
+							+ "id='deleteButton" + i + "'> </input>");
+
+	var smallImage = document.getElementById('smallImage' + i);
 	// Unhide image elements
-	largeImage.style.display = 'block';
+	smallImage.style.display = 'block';
+
 	// Show the captured photo
 	// The in-line CSS rules are used to resize the image
-	largeImage.src = imageURI;
+	smallImage.src = imageURI;
+	i = i + 1;
 }
 
 // A button will call this function
