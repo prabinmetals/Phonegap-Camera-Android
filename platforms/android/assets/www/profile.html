@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/jquery.mobile-1.4.0.min.js"></script>
+<script src="./js/cordova.js"></script>
+
+<script src="./js/cdv-plugin-fb-connect.js"></script>
+<script src="./js/facebook_js_sdk.js"></script>
+
+<link rel="stylesheet" href="./css/jquery.mobile-1.4.0.min.css">
+<link rel="stylesheet" href="./css/myDesign.css">
+
+</head>
+
+<body onload="onLoad()">
+	<!-- Start Profile Page -->
+	<div data-role="page" id="PageProfile">
+
+		<!-- Banner -->
+		<div data-role="header">
+			<div id="myh1">
+				<h1>Street Book Finder</h1>
+			</div>
+		</div>
+
+		<!-- Display User Name -->
+		<p id="profile_userName">Welcome</p>
+		<script type="text/javascript">
+			// Print Facebook username in a id="profileBTN"
+			var value = window.localStorage.getItem("LS_FB_Username");
+			if (value != "")
+				$("#profile_userName").append(": " + value);
+		</script>
+
+		<!-- Menu Buttons -->
+		<button onclick="logout();">Logout</button>
+		<a data-role="button" onclick="history.go(-1);"> Back</a>
+	</div>
+	<!-- End Profile Page -->
+
+	<script src="./js/test.js"></script>
+
+</body>
+
+</html>

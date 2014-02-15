@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="phonegap.js"></script>
+<script src="cordova.js"></script>
+
+<script src="js/cdv-plugin-fb-connect.js"></script>
+<script src="js/facebook_js_sdk.js"></script>
+
+<link rel="stylesheet" href="jquery.mobile-1.4.0.min.css">
+<link rel="stylesheet" href="css/myDesign.css">
+
+<script src="jquery.js"></script>
+<script src="jquery.mobile-1.4.0.min.js"></script>
+</head>
+<body onload="onLoad()">
+	<!-- Start Menu Page -->
+	<div data-role="page" id="PageMenu">
+
+		<!-- Banner -->
+		<div data-role="header">
+			<div id="myh1">
+				<h1>Street Book Finder</h1>
+			</div>
+		</div>
+
+		<!-- Menu Buttons -->
+		<button onclick="window.location.href='uploadBook.html';">Upload Book</button>
+		<button onclick="">Grab A Book</button>
+		<button id="btnDialogProfile">My Profile</button>
+
+		<!-- 		<a data-rel="dialog" data-role="button" id="btnDialogProfile"> My Profile</a> -->
+	</div>
+	<!-- End Menu Page -->
+
+	<!-- Start Dialog box to prompt facebook login -->
+	<div data-role="dialog" id="LoginDialog">
+
+		<!-- Banner -->
+		<div data-role="header">
+			<div id="myh1">
+				<h2>Login Using Facebook</h2>
+			</div>
+		</div>
+
+		<!-- Buttons -->
+		<div data-role="content">
+			<a data-role="button" onclick="login();">Login</a> <a href="#PageMenu" data-role="button">Cancel</a>
+		</div>
+	</div>
+	<!-- End Dialog box to prompt facebook login -->
+	<script src="js/test.js"></script>
+
+</body>
+
+</html>

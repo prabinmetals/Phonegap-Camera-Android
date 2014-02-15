@@ -1,0 +1,44 @@
+/* My own design */
+#myh1 h1 {
+	color: white;
+	font-size: 30px;
+	text-align: center;
+}
+
+#myh1 h2 {
+	color: white;
+	font-size: 20px;
+	text-align: center;
+}
+/* Push footer to bottom */
+[data-role=page] {
+	height: 100% !important;
+	position: relative !important;
+}
+
+[data-role=footer] {
+	bottom: 0;
+	position: absolute !important;
+	margin: auto !important;
+	width: 100%;
+}
+/* Default designs override */
+.ui-page .ui-title {
+	background-color: #1D7A9B;
+	overflow: visible !important;
+	text-shadow: none;
+}
+
+.ui-page .ui-header {
+	background-color: #1D7A9B;
+}
+
+.ui-page .ui-footer h1 {
+	background-color: #1D7A9B;
+	font-size: 20px;
+	margin: 0 0 0 -16px;
+}
+
+.ui-grid-a {
+	text-align: center;
+}
