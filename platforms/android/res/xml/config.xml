@@ -20,15 +20,20 @@ Hello Cordova
         name="loglevel"
         value="DEBUG" />
 
+    <feature name="App" >
+        <param
+            name="android-package"
+            value="org.apache.cordova.App" />
+    </feature>
     <feature name="org.apache.cordova.facebook.Connect" >
         <param
             name="android-package"
             value="org.apache.cordova.facebook.ConnectPlugin" />
     </feature>
-    <feature name="App" >
+    <feature name="Geolocation" >
         <param
             name="android-package"
-            value="org.apache.cordova.App" />
+            value="org.apache.cordova.geolocation.GeoBroker" />
     </feature>
     <feature name="Camera" >
         <param

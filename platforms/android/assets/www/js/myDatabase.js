@@ -40,8 +40,8 @@ function onBodyLoad() {
 						// you can uncomment this next line if you want the User
 						// table to be
 						// empty each time the application runs
-						// tx.executeSql('DROP TABLE User', nullHandler,
-						// nullHandler);
+						tx.executeSql('DROP TABLE User', nullHandler,
+								nullHandler);
 
 						// this line actually creates the table User if it does
 						// not exist
@@ -130,6 +130,8 @@ $("#title").val(window.localStorage.getItem("uploadBook_title"));
 $("#author").val(window.localStorage.getItem("uploadBook_author"));
 $("#isbn").val(window.localStorage.getItem("uploadBook_isbn"));
 $("#booklocation").val(window.localStorage.getItem("uploadBook_booklocation"));
+$("#latitude").val(window.localStorage.getItem("uploadBook_latitude"));
+$("#longitude").val(window.localStorage.getItem("uploadBook_longitude"));
 
 // Set Data upon Back Key pressed
 document.addEventListener("backbutton", onBackKeyDown, false);
@@ -137,6 +139,8 @@ function onBackKeyDown() {
 	window.localStorage.setItem("uploadBook_title", $("#title").val());
 	window.localStorage.setItem("uploadBook_author", $("#author").val());
 	window.localStorage.setItem("uploadBook_isbn", $("#isbn").val());
+	window.localStorage.setItem("uploadBook_latituden", $("#latitude").val());
+	window.localStorage.setItem("uploadBook_longitude", $("#longitude").val());
 	window.localStorage.setItem("uploadBook_booklocation", $("#booklocation")
 			.val());
 	window.location.href = "index.html";

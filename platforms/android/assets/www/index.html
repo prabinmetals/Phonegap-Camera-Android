@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- <script src="phonegap.js"></script> -->
 <script src="cordova.js"></script>
 
 <script src="js/cdv-plugin-fb-connect.js"></script>
@@ -25,21 +24,14 @@
 		</div>
 
 		<!-- Menu Buttons -->
+		<!-- Warning: 
+			Don't use the following for page navigation. It has conflict with jquery.js.
+		 	<a data-role="button" href="gotoPage.html">Click Me</a> 
+		 -->
+		<button onclick="window.location.href='temp_maps.html';">Goto Maps</button>
 		<button onclick="window.location.href='uploadBook.html';">Upload Book</button>
 		<button onclick="">Grab A Book</button>
 		<button id="btnDialogProfile">My Profile</button>
-
-		<!-- TEst -->
-		<button onclick="dd();">Butter</button>
-		<img height="300px" src='' id="photoBase64" />
-
-		<script type="text/javascript">
-			function dd() {
-				var x = window.localStorage.getItem("photoBase64");
-				$("#photoBase64").attr("src", x);
-			}
-		</script>
-		<!-- 		end test -->
 	</div>
 	<!-- End Menu Page -->
 
@@ -67,7 +59,7 @@
 
 
 	<!-- End Dialog box to prompt facebook login -->
-	<script src="./js/test.js"></script>
+	<script src="js/test.js"></script>
 
 </body>
 </html>
