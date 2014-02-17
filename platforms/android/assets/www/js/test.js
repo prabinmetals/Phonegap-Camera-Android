@@ -1,4 +1,3 @@
-
 function onLoad() { // Executed at the beginning from <body onload="onLoad();">
 	document.addEventListener("deviceready", function() {
 		try {
@@ -12,7 +11,7 @@ function onLoad() { // Executed at the beginning from <body onload="onLoad();">
 				xfbml : true
 			});
 		} catch (e) {
-			alert(e);
+			alert(e); 
 		}
 	}, false);
 }
@@ -25,10 +24,12 @@ function login() { // Login facebook
 				// cannot be returned from this function. It is async function.
 				// Try 'return response.username;' and call it from index.html
 				// file. Won't work.
-				window.localStorage.setItem("LS_FB_Username", response.name);
+
 				$("#LoginDialog").dialog("close"); // Close the dialog box that
 				// popped out from index.html to prompted to login Facebook. We
 				// were navigated to this login() from that dialog box.
+				window.localStorage.setItem("LS_FB_Username", response.name);
+				getUserID();
 				window.location.href = "profile.html"; // Goto profile.html
 				// page
 			});
@@ -54,9 +55,10 @@ function getUserID() { // Get facebook userId
 	var result = null;
 	FB.getLoginStatus(function(response) {
 		if (response.status == 'connected') { // Simply, if connected
-			result = response.authResponse.userId; // Must use
-			// authResponse.userId. But, we use response.name for getting
-			// Username. See login().
+			result = response.authResponse.userId;
+			window.localStorage.setItem("LS_FB_UserID", result);
+			// Must use authResponse.userId. But, we use response.name for
+			// getting Username. See login().
 		}
 	});
 	return result; // return works for userId but not username!
