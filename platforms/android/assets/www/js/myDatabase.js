@@ -97,7 +97,7 @@ function AddValueToDB() {
 	if (!window.openDatabase) {
 		alert('Databases are not supported in this browser.');
 		return;
-	}
+	}  
 	// this is the section that actually inserts the values into the User
 	// table
 	db
