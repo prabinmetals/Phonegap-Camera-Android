@@ -97,7 +97,7 @@ function AddValueToDB() {
 	if (!window.openDatabase) {
 		alert('Databases are not supported in this browser.');
 		return;
-	}  
+	}
 	// this is the section that actually inserts the values into the User
 	// table
 	db
@@ -121,27 +121,37 @@ function AddValueToDB() {
 	return false;
 }
 
-/*
- * Preserve data entered in form. To preserve and retrieve photos, see
- * myCamera.js > onPhotoDataSuccess(imageData) and getImg();
- */
-// Get Data
-$("#title").val(window.localStorage.getItem("uploadBook_title"));
-$("#author").val(window.localStorage.getItem("uploadBook_author"));
-$("#isbn").val(window.localStorage.getItem("uploadBook_isbn"));
-$("#booklocation").val(window.localStorage.getItem("uploadBook_booklocation"));
-$("#latitude").val(window.localStorage.getItem("uploadBook_latitude"));
-$("#longitude").val(window.localStorage.getItem("uploadBook_longitude"));
-
-// Set Data upon Back Key pressed
-document.addEventListener("backbutton", onBackKeyDown, false);
-function onBackKeyDown() {
-	window.localStorage.setItem("uploadBook_title", $("#title").val());
-	window.localStorage.setItem("uploadBook_author", $("#author").val());
-	window.localStorage.setItem("uploadBook_isbn", $("#isbn").val());
-	window.localStorage.setItem("uploadBook_latituden", $("#latitude").val());
-	window.localStorage.setItem("uploadBook_longitude", $("#longitude").val());
-	window.localStorage.setItem("uploadBook_booklocation", $("#booklocation")
-			.val());
-	window.location.href = "index.html";
+function getSavedFormData() {
+	/*
+	 * Preserve data entered in form. To preserve and retrieve photos, see
+	 * myCamera.js > onPhotoDataSuccess(imageData) and getImg();
+	 */
+	// Get title, Author, ISBN, Latitude, Longitude, Address, thumbnail
+	$("#title").val(window.localStorage.getItem("uploadBook_title"));
+	$("#author").val(window.localStorage.getItem("uploadBook_author"));
+	$("#isbn").val(window.localStorage.getItem("uploadBook_isbn"));
+	$("#gMapAddressInputField").val(
+			window.localStorage.getItem("uploadBook_gMapAddressInputField"));
+	// Image 1
+	for ( var L = 1; L <= 4; L++) {
+		if (window.localStorage.getItem("photoBase64" + L.toString())) {
+			$('#' + "image" + L.toString()).attr('src',
+					window.localStorage.getItem("photoBase64" + L.toString()));
+			// Update button to "Delete" option
+			$('#' + "addImageButton" + L.toString()).css("background-color",
+					"red", "color", "white");
+			$('#' + "addImageButton" + L.toString()).html("Delete");
+		}
+	}
 }
+// Set Data on focusout of input field
+$("#title, #author, #ISBN", "#gMapAddressInputField").focusout(
+		function() {
+			window.localStorage.setItem("uploadBook_title", $("#title").val());
+			window.localStorage
+					.setItem("uploadBook_author", $("#author").val());
+			window.localStorage.setItem("uploadBook_isbn", $("#isbn").val());
+			window.localStorage.setItem("uploadBook_gMapAddressInputField", $(
+					"#gMapAddressInputField").val());
+
+		});

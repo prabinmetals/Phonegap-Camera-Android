@@ -1,88 +1,25 @@
-document.addEventListener("deviceready", onMapDeviceReady, false);
+var currentLat = window.localStorage.getItem("uploadBook_latitude");
+var currentLng = window.localStorage.getItem("uploadBook_longitude");
+var myZoom = 19;
+var myMarkerIsDraggable = true;
+var map;
+var myMarker;
+var geocoder;
 
-function onMapDeviceReady() {
-	navigator.geolocation.getCurrentPosition(onSuccess, onError, {
-		'enableHighAccuracy' : false,
-		'timeout' : 20000
-	});
-}
-
-// GEOLOCATION
-function onSuccess(position) {
-	// MAP configuration
-	var myZoom = 19;
-	var myMarkerIsDraggable = true;
-	var geocoder;
-	var map;
-	var myMarker;
-	var bounds;
-
-	// Previous position
-	var myLat = window.localStorage.getItem("uploadBook_latitude");
-	var myLong = window.localStorage.getItem("uploadBook_longitude");
-	if (myLat == "null" || myLong == null) {
-		// alert("isNull");
-		// Current Position
-		myLat = position.coords.latitude;
-		myLong = position.coords.longitude;
-		window.localStorage.setItem("uploadBook_latitude", myLat);
-		window.localStorage.setItem("uploadBook_longitude", myLong);
-		document.getElementById('latitude').value = myLat;
-		document.getElementById('longitude').value = myLong;
-	}
-	// alert(myLat + " " + myLong);
-	// document.getElementById('latitude').value = myLat;
-	// document.getElementById('longitude').value = myLong;
-
-	// creates the map
-	// zooms
-	// centers the map
-	// sets the map's type
-	map = new google.maps.Map(document.getElementById('map_canvas'), {
+function initMap() {
+	var latlng = new google.maps.LatLng(currentLat, currentLng);
+	var mapOptions = {
 		zoom : myZoom,
-		center : new google.maps.LatLng(myLat, myLong),
+		center : latlng,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
-	});
+	};
+	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+	geocoder = new google.maps.Geocoder();
 
 	// creates a draggable marker to the given coords
 	myMarker = new google.maps.Marker({
-		position : new google.maps.LatLng(myLat, myLong),
+		position : latlng,
 		draggable : myMarkerIsDraggable
-	});
-
-	// Create the search box and link it to the UI element.
-	var input = /** @type {HTMLInputElement} */
-	(document.getElementById('pac-input'));
-	// map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-	var searchBox = new google.maps.places.SearchBox(
-	/** @type {HTMLInputElement} */
-	(input));
-
-	// When new address is entered in search field, go there.
-	google.maps.event.addListener(searchBox, 'places_changed', function() {
-		var places = searchBox.getPlaces();
-		place = places[0];
-		// Update Marker
-		myMarker.setPosition(place.geometry.location);
-		// Get new bounds
-		var bounds = new google.maps.LatLngBounds();
-		bounds.extend(place.geometry.location);
-		map.fitBounds(bounds);
-		map.setZoom(myZoom);
-
-		// Get new position and update variables
-		myLat = place.geometry.location.lat();
-		myLong = place.geometry.location.lng()
-		window.localStorage.setItem("uploadBook_latitude", myLat);
-		window.localStorage.setItem("uploadBook_longitude", myLong);
-		document.getElementById('latitude').value = myLat;
-		document.getElementById('longitude').value = myLong;
-	});
-	// When bounds are changed, the search box will display results close to the
-	// current place.
-	google.maps.event.addListener(map, 'bounds_changed', function() {
-		var bounds = map.getBounds();
-		searchBox.setBounds(bounds);
 	});
 
 	// adds a listener to the marker
@@ -90,22 +27,86 @@ function onSuccess(position) {
 	// then updates the input with the new coords
 	// When marker is moved, get new latlong
 	google.maps.event.addListener(myMarker, 'dragend', function(evt) {
-		myLat = evt.latLng.lat();
-		myLong = evt.latLng.lng();
-		window.localStorage.setItem("uploadBook_latitude", myLat);
-		window.localStorage.setItem("uploadBook_longitude", myLong);
-		document.getElementById('latitude').value = myLat;
-		document.getElementById('longitude').value = myLong;
+		currentLat = evt.latLng.lat();
+		currentLng = evt.latLng.lng();
+		window.localStorage.setItem("uploadBook_latitude", currentLat);
+		window.localStorage.setItem("uploadBook_longitude", currentLng);
+		$("#uploadBook_latitude").val(currentLat);
+		$("#uploadBook_longitude").val(currentLng);
+		reverseGeoCode();
 	});
 
 	// centers the map on markers coords
 	map.setCenter(myMarker.position);
-
 	// adds the marker on the map
 	myMarker.setMap(map);
 }
 
-// onError Callback receives a PositionError object
-function onError(error) {
-	alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+function getCurrentPosition() {
+	navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+		'enableHighAccuracy' : false,
+		'timeout' : 20000
+	});
+	function onSuccess(position) {
+		// Get current GPS Position
+		currentLat = position.coords.latitude;
+		currentLng = position.coords.longitude;
+		// Place those values in the input box / Store
+		// $("#uploadBook_latitude").val(currentLat);
+		// $("#uploadBook_longitude").val(currentLng);
+		window.localStorage.setItem("uploadBook_latitude", currentLat);
+		window.localStorage.setItem("uploadBook_longitude", currentLng);
+		initMap();
+		reverseGeoCode();
+	}
+	// onError Callback receives a PositionError object
+	function onError(error) {
+		alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+	}
+}
+
+$("#gMapAddressInputField").focus(function() {
+	initMap();
+});
+
+function codeAddress() {
+	// Create the search box and link it to the UI element.
+	var address = $('#gMapAddressInputField').val();
+	geocoder.geocode({
+		'address' : address
+	}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+			myMarker.setPosition(results[0].geometry.location);
+			// adds the marker on the map
+			myMarker.setMap(map);
+			currentLat = results[0].geometry.location.lat();
+			currentLng = results[0].geometry.location.lng();
+			window.localStorage.setItem("uploadBook_latitude", currentLat);
+			window.localStorage.setItem("uploadBook_longitude", currentLng);
+			reverseGeoCode();
+		} else {
+			alert('Geocode was not successful for the following reason: '
+					+ status);
+		}
+	});
+}
+
+function reverseGeoCode() {
+	$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="
+			+ currentLat + "," + currentLng + "&sensor=false", function(
+			JSON_result) {
+		// Set title, author, ISBN, photo in input fields
+		if (JSON_result.results[0].formatted_address) {
+			// Zoom
+			// map.setZoom(myZoom);
+			// Address on Marker
+			$("#gMapAddressInputField").val(
+					JSON_result.results[0].formatted_address);
+			window.localStorage.setItem("uploadBook_gMapAddressInputField",
+					JSON_result.results[0].formatted_address);
+		} else {
+			alert("Failed to get address.");
+		}
+	});
 }

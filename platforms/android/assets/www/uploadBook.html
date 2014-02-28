@@ -2,75 +2,127 @@
 <html>
 <head>
 <title>Upload Book Information</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, 
+  	height=device-height, target-densitydpi=device-dpi"
+/>
+
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script> -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-
-<script type="text/javascript" charset="utf-8" src="js/cdv-plugin-fb-connect.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/facebook_js_sdk.js"></script>
-
+<script type="text/javascript" src="fastclick.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="jquery.mobile-1.4.0.min.js"></script>
 
-<link rel="stylesheet" href="jquery.mobile-1.4.0.min.css">
 <link rel="stylesheet" href="css/myDesign.css">
 
+<script type="text/javascript">
+	// 	$(window).load(function() { 
+	// 		$(".loader").fadeOut("slow"); 
+	// 	})
+</script>
+<script type="text/javascript">
+	window.addEventListener('load', function() {
+		FastClick.attach(document.body);
+	}, false);
+</script>
+
 </head>
-<!-- onBodyLoad() from js/myDatabase.js -->
-<body onLoad="onBodyLoad();onMapDeviceReady();">
+<button class="menuButtonTopRight"></button>
+<button class="menuButtonTopRight"
+	style="background-image: url('css/home-black.png'); float: left; margin: 0px 0px 0 10px;"
+></button>
 
-	<!-- Banner -->
-	<div data-role="header">
-		<div id="myh1">
-			<h1>Street Book Finder</h1>
+<!-- getSavedFormData() from js/myDatabase.js -->
+<body onload="getSavedFormData(); initMap();">
+	<div data-role="page" id="uploadBookPage">
+		<!-- Banner -->
+		<div data-role="header">
+			<div id="pageTitle">Street Book Finder</div>
 		</div>
+		<!-- Book's Info Form -->
+		<p class="subTitle">Book Information</p>
+
+		<div id="section_form">
+			<button class="myButton" id="btnScan" onclick="scan();" style="float: right; margin-top: 10px;">Barcode
+				Scanner</button>
+			<p>Title:</p>
+			<input class="textbox" type="search" id="title" value="" maxlength="30">
+			<p>Author:</p>
+			<input class="textbox" type="search" id="author" value="" maxlength="30">
+			<p>Isbn:</p>
+			<input class="textbox" type="search" id="isbn" maxlength="13" value="">
+		</div>
+
+
+		<!-- Google Map -->
+		<p class="subTitle">Book Location</p>
+		<div id="section_location">
+			<table>
+				<!-- 				<tr> -->
+				<!-- 					<button id="showCurrentGPSLocation" onclick="getCurrentPosition();">Current Location -->
+				<!-- 						(GPS)</button> -->
+				<!-- 				</tr> -->
+				<tr>
+					<td width="100%"><input style="font-size: 14px;" id="gMapAddressInputField"
+						class="textbox" type="search"
+						placeholder="Clear this box and click Search to get current GPS position."
+					></td>
+					<td>
+						<button class="myButton"
+							style="width: 100px; height: 40px; line-height: 20px; font-size: 15px;"
+							onclick="codeAddress();"
+						>Search</button>
+					</td>
+				</tr>
+			</table>
+			<div id="map_canvas" style="width: 100%; height: 400px;"></div>
+		</div>
+		<!-- Camera Button -->
+		<p class="subTitle">Photo Of The Book</p>
+		<div id="section_photo">
+			<div style="width: 100%;">
+				<table id="imagesTable">
+					<tr>
+						<td>
+							<button class="myButton" id="addImageButton1" style="width: 100%;">ADD IMAGE</button> <img
+							id="image1" alt="" src=""
+						>
+						</td>
+						<td>
+							<button class="myButton" id="addImageButton2" style="width: 100%;">ADD IMAGE</button> <img
+							id="image2" alt="" src=""
+						>
+						</td>
+					<tr>
+						<td>
+							<button class="myButton" id="addImageButton3" style="width: 100%;">ADD IMAGE</button> <img
+							id="image3" alt="" src=""
+						>
+						</td>
+						<td>
+							<button class="myButton" id="addImageButton4" style="width: 100%;">ADD IMAGE</button> <img
+							id="image4" alt="" src=""
+						>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!--  END OF PAGE-->
+		<br>
+		<button class="myButton" style="width: 100%;" onClick="codeAddress();">Submit</button>
+		<span id="lbUsers"></span> <br>
+
 	</div>
-
-	<!-- Menu Buttons -->
-	<button data-role="button" onclick="capturePhoto();">Capture Photo</button>
-	<!-- 	<button onclick="capturePhotoEdit();">Capture Editable Photo</button> -->
-	<!-- 	<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button> -->
-	<!-- 	<button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button> -->
-
-	<!-- Table to show Form, Photos, Location -->
-	<table id="myTable" style="width: 100%; border: 1px solid black; padding: 3px;">
-		<tr>
-			<td id="atd" valign="top"
-				style="width: 160px; border: 1px solid black; background-color: #CEE6F1;"
-			>
-				<p align="center" style="background-color: #0091FF; color: white; padding: 5px; margin: 0;">Images</p>
-			</td>
-			<td align="left" valign="top">Title: <input data-type="search" type="text" id="title" value=>
-				<br> Author: <input data-type="search" type="text" id="author"> <br> ISBN: <input
-				data-type="search" type="number" id="isbn" maxlength="13"
-			> <br> Book's Location Description: <input data-type="search" type="text" id="booklocation"><br>
-
-				<!-- 	****************** Google Map ****************** -->
-				<button id="showCurrentGPSLocation"
-					onclick="window.localStorage.setItem('uploadBook_latitude', null); onMapDeviceReady();"
-				>Current Position</button> <input id="pac-input" type="text" placeholder="Search Box">
-				<div id="map_canvas" style="width: 100%; height: 400px;"></div>
-				<p id="canvas">.</p> <br> <label for="latitude">Latitude:</label> <input id="latitude"
-				type="text" value=""
-			/> <label for="longitude">Longitude:</label> <input id="longitude" type="text" value="" />
-
-
-				<button data-role="button" id="submit" style="background-color: #0E37EE; color: white;"
-					onClick="codeAddress();"
-				>Submit</button>
-			</td>
-		</tr>
-	</table>
-
 	<!-- Some JS Files -->
-	<span id="lbUsers"></span>
-
 	<script type="text/javascript" charset="utf-8" src="js/myDatabase.js">
 		
 	</script>
 	<script type="text/javascript" charset="utf-8" src="js/test.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/myCamera.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/gmap.js"></script>
-
+	<script type="text/javascript" charset="utf-8" src="js/barcodeScanner.js"></script>
 </body>
 </html>

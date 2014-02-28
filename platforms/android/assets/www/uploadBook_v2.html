@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload Book Information</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, 
+  	height=device-height, target-densitydpi=device-dpi"
+/>
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
+<script type="text/javascript" charset="utf-8" src="jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="jquery.mobile-1.4.0.min.js"></script>
+
+<link rel="stylesheet" href="jquery.mobile-1.4.0.min.css">
+<link rel="stylesheet" href="css/myDesign.css">
+</head>
+
+<!-- getSavedFormData() from js/myDatabase.js -->
+<body onload="getSavedFormData();">
+
+	<!-- Banner -->
+	<div data-role="header">
+		<div id="myh1">
+			<h1>Upload Book Information</h1>
+		</div>
+	</div>
+
+
+	<!-- Table to show Form, Photos, Location -->
+	<table id="myTable">
+		<tr>
+
+			<!--  Left Panel for Photos -->
+			<td id="atd" valign="top">
+				<!-- Camera Button -->
+				<div id="myButton">
+					<button onclick="capturePhoto();">Camera</button>
+				</div>
+			</td>
+
+			<!-- Right Panel for Barcode Scanner and Book Info -->
+			<td id="btd" align="left" valign="top">
+				<!-- Barcode Scanner Button -->
+				<div id="myButton">
+					<button id="btnScan" onclick="scan();">Barcode Scanner</button>
+				</div> <!-- Book's Info Form --> <br> <b>TITLE:</b> <input data-type="search" type="text"
+				id="title" value=""
+			> <br> <b>AUTHOR</b>: <input data-type="search" type="text" id="author" value=""> <br>
+				<b>ISBN:</b> <input data-type="search" type="number" id="isbn" maxlength="13" value="">
+				<br> <b>BOOK'S LOCATION:</b> <!-- 	****************** Google Map ****************** -->
+				<div id="myButton">
+					<button id="showCurrentGPSLocation" onclick="getCurrentPosition();">Current Location
+						(GPS)</button>
+				</div> <input data-type="search" id="gMapAddressInputField" type="text"
+				placeholder="or Enter Address (Google Map)."
+			>
+
+				<div id="map_canvas" style="width: 100%; height: 240px;"></div> <!-- 	<p id="canvas"></p> <br> <label for="latitude">Latitude:</label> <input -->
+				<!-- id="uploadBook_latitude" type="text" value="" --> <!-- /> <label for="longitude">Longitude:</label> 
+				<input id="uploadBook_longitude" type="text" --> <!-- value="" />-->
+
+			</td>
+		</tr>
+	</table>
+
+	<div data-role="footer" id="myButton">
+		<button data-role="button" id="submit" style="color: #82FA58;" onClick="codeAddress();">Submit</button>
+	</div>
+
+	<span id="lbUsers"></span>
+
+	<!-- Some JS Files -->
+	<script type="text/javascript" charset="utf-8" src="js/myDatabase.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/test.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/myCamera.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/gmap.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/barcodeScanner.js"></script>
+</body>
+</html>

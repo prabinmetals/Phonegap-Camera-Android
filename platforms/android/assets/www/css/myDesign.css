@@ -1,44 +1,217 @@
 /* My own design */
-#myh1 h1 {
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+p {
+	font-size: 25px;
+	font-weight: bold;
+	font-variant: small-caps;
+	color: #494949;
+}
+
+/* Input box: http://html-generator.weebly.com/css-textbox-style.html */
+.textbox {
+	border: 1px solid #c4c4c4;
+	height: 40px;
+	width: 100%;
+	font-size: 22px;
+	padding: 4px 4px 4px 4px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	box-shadow: 0px 0px 8px #d9d9d9;
+	-moz-box-shadow: 0px 0px 8px #d9d9d9;
+	-webkit-box-shadow: 0px 0px 8px #d9d9d9;
+}
+
+.textbox:focus {
+	outline: none;
+	border: 1px solid yellow;
+	box-shadow: 0px 0px 8px yellow;
+	-moz-box-shadow: 0px 0px 8px yellow;
+	-webkit-box-shadow: 0px 0px 8px yellow;
+}
+
+#pageTitle {
+	font-weight: bolder;
+	font-variant: small-caps;
 	color: white;
 	font-size: 30px;
 	text-align: center;
-}
-
-#myh1 h2 {
-	color: white;
-	font-size: 20px;
-	text-align: center;
-}
-/* Push footer to bottom */
-[data-role=page] {
-	height: 100% !important;
-	position: relative !important;
-}
-
-[data-role=footer] {
-	bottom: 0;
-	position: absolute !important;
-	margin: auto !important;
 	width: 100%;
-}
-/* Default designs override */
-.ui-page .ui-title {
-	background-color: #1D7A9B;
-	overflow: visible !important;
-	text-shadow: none;
-}
-
-.ui-page .ui-header {
-	background-color: #1D7A9B;
+	/* 	http://www.colorzilla.com/gradient-editor/ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #45484d),
+		color-stop(63%, #000000));
+	padding: 15px 0 15px 0;
+	color: white;
+	margin: auto auto 0 0;
+	font-variant: small-caps;
 }
 
-.ui-page .ui-footer h1 {
-	background-color: #1D7A9B;
-	font-size: 20px;
-	margin: 0 0 0 -16px;
+.menuButtonTopRight {
+	margin: 0px 10px 0 0;
+	-moz-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	background-position: center;
+	background-image: url('bars-black.png');
+	background-repeat: no-repeat;
+	height: 50px;
+	width: 50px;
+	float: right;
+	-webkit-border-bottom-left-radius: 30px;
+	-webkit-border-bottom-right-radius: 30px;
+	/* 	-moz-border-radius: 30px; */
 }
 
-.ui-grid-a {
+.menuButtonTopRight:active {
+	background-color: transparent;
+	top: 1px;
+	position: relative;
+}
+
+.subTitle {
+	font-weight: bold;
+	font-variant: small-caps;
+	color: white;
+	font-size: 24px;
 	text-align: center;
+	width: 100%;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(53,
+		106, 160, 1)), color-stop(100%, rgba(53, 106, 160, 1)));
+	padding: 5px 0 5px 0;
+	color: white;
+	margin: auto auto 0 0;
+	font-variant: small-caps;
 }
+/* CSS Button Generator: http://www.cssbuttongenerator.com/ */
+.myButton {
+	-moz-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	box-shadow: inset 0px 1px 0px 0px #cae3fc;
+	/* 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #79bbff */
+	/* 		), color-stop(1, #4197ee)); */
+	/* 			background: -moz-linear-gradient(center top, #79bbff 5%, #4197ee 100%); */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(246,
+		248, 249, 1)), color-stop(50%, rgba(229, 235, 238, 1)),
+		color-stop(51%, rgba(215, 222, 227, 1)),
+		color-stop(100%, rgba(245, 247, 249, 1)));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff',
+		endColorstr='#4197ee');
+	background-color: #79bbff;
+	/* 	-webkit-border-top-left-radius: 30px; */
+	/* 	-moz-border-radius: 30px; */
+	/* 	border-top-left-radius: 30px; */
+	/* 	-webkit-border-top-right-radius: 30px; */
+	/* 	-moz-border-radius-topright: 30px; */
+	/* 	border-top-right-radius: 30px; */
+	/* 	-webkit-border-bottom-right-radius: 30px; */
+	/* 	-moz-border-radius-bottomright: 30px; */
+	/* 	border-bottom-right-radius: 30px; */
+	/* 	-webkit-border-bottom-left-radius: 30px; */
+	/* 	-moz-border-radius-bottomleft: 30px; */
+	border-radius: 10px;
+	text-indent: -4px;
+	border: 2px solid #D8D8D8;
+	padding: 0px 10px 0 10px;
+	/* 	display: inline-block; */
+	color: #2E2E2E;
+	font-family: Georgia;
+	font-size: 15px;
+	font-weight: bold;
+	font-style: normal;
+	height: 40px;
+	line-height: 20px;
+	text-decoration: none;
+	text-align: center;
+	/* 	text-shadow: 1px 1px 0px #287ace; */
+}
+
+.myButton:active {
+	color: white;
+	position: relative;
+	top: 1px;
+}
+
+#section_form {
+	/* 	margin: 0 0 0 0px; */
+	padding: 8px;
+	/* 	background-color: #B1D3FF; */
+}
+
+#section_photo {
+	/* 	margin: 0 0 0 11px; */
+	padding: 8px;
+	/* 	background-color: #B1D3FF; */
+}
+
+#section_location {
+	/* 	margin: 0 0 0 11px; */
+	padding: 8px;
+	/* 	background-color: #B1D3FF; */
+}
+
+#imagesTable {
+	width: 100%;
+	padding: 5px;
+	height: 300px;
+	/* 	background-color: #B1D3FF; */
+}
+
+#imagesTable tr {
+	padding: 10px;
+}
+
+#imagesTable tr td {
+	/* 	border: 2px solid black; */
+	/* 	border-radius: 25px; */
+	/* 	background-color: #DFDFDF; */
+	padding: 10px;
+	border: 1px solid black;
+	height: 220px;
+	width: 50%;
+}
+
+#imagesTable tr td img {
+	/* 	border: 1px solid black; */
+	/* 	background-color: #DFDFDF; */
+	/* 	padding: 1px; */
+	/* 	border: 1px solid black; */
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* Push footer to bottom */
+/* [data-role=page] { */
+/* 	height: 100% !important; */
+/* 	position: relative !important; */
+/* } */
+/* [data-role=footer] { */
+/* 	bottom: 0; */
+/* 	position: absolute !important; */
+/* 	margin: auto !important; */
+/* 	width: 100%; */
+/* } */
+/* Default designs override */
+/* .ui-page .ui-title { */
+/* 	background-color: #1D7A9B; */
+/* 	overflow: visible !important; */
+/* 	text-shadow: none; */
+/* } */
+
+/* .ui-page .ui-header { */
+/* 	background-color: #1D7A9B; */
+/* } */
+
+/* .ui-page .ui-footer h1 { */
+/* 	background-color: #1D7A9B; */
+/* 	font-size: 20px; */
+/* 	margin: 0 0 0 -16px; */
+/* } */
+
+/* .ui-grid-a { */
+/* 	text-align: center; */
+/* } */
